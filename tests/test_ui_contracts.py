@@ -255,11 +255,15 @@ def test_bat_launchers_windows8_cwd_and_console() -> None:
     assert "Windows 8" in readme
 
 
-def test_app_ui_has_shutdown_button() -> None:
+def test_app_ui_has_no_server_shutdown_control() -> None:
+    """Sprint 8.27: kill-server control must not exist on a hosted Coolify process."""
     app_ui = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
-    assert "Завершить работу сервера" in app_ui
-    assert "_shutdown_server" in app_ui
-    assert "signal.SIGTERM" in app_ui or "os._exit" in app_ui
+    assert "Завершить работу сервера" not in app_ui
+    assert "_shutdown_server" not in app_ui
+    assert "os._exit" not in app_ui
+    assert "signal.SIGTERM" not in app_ui
+    assert "import signal" not in app_ui
+    assert "блокировки Windows" not in app_ui
 
 
 def test_app_ui_gemini_status_uses_key_pool(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -380,7 +384,8 @@ class TestSessionIsolation:
 
     def test_app_ui_has_clear_session_button(self) -> None:
         app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
-        assert "Очистить сессию" in app_src or "Сбросить" in app_src
+        assert "Начать новый заказ" in app_src
+        assert "_clear_active_view" in app_src
 
     def test_app_ui_imports_mask_secret(self) -> None:
         app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
@@ -398,3 +403,51 @@ class TestSessionIsolation:
         src = secrets_path.read_text(encoding="utf-8")
         assert "mask_secret" in src
         assert "visible_chars" in src
+
+
+# ---------------------------------------------------------------------------
+# Sprint 8.27: Operator-first sidebar, server lockdown
+# ---------------------------------------------------------------------------
+
+
+class TestOperatorSidebar:
+    """Contract tests for the warehouse-operator sidebar redesign."""
+
+    def test_engineering_expander_collapsed_by_default(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert 'st.expander("🛠️ Инженерная диагностика", expanded=False)' in app_src
+
+    def test_operator_facing_labels(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "📦 Мебельный Склад" in app_src
+        assert "Каталог 1С" in app_src
+        assert "ИИ-Ассистент" in app_src
+        assert "Начать новый заказ" in app_src
+        assert "🔒 Выйти / Сменить смену" in app_src
+
+    def test_diagnostics_remain_available_in_expander(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "LLM провайдер" in app_src
+        assert "Проверить ключи" in app_src
+        assert "mask_secret" in app_src
+        assert "KeyPool.from_env" in app_src
+        assert "test_connection" in app_src
+        assert "Контракт WMS" in app_src
+        assert "session_uuid" in app_src
+
+    def test_no_duplicate_reset_buttons(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "Очистить сессию" not in app_src
+        assert "sidebar_session_reset" not in app_src
+        assert app_src.count("Начать новый заказ") == 1
+
+    def test_no_bulky_catalog_success_banner(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "Каталог загружен:" not in app_src
+
+    def test_format_catalog_size_uses_space_separator(self) -> None:
+        import app_ui
+
+        assert app_ui._format_catalog_size(12_880) == "12 880"
+        assert app_ui._format_catalog_size(0) == "0"
+

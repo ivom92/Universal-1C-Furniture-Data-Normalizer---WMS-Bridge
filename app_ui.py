@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import os
-import signal
 import uuid
 import warnings
 
@@ -91,16 +90,6 @@ _RESULT_KEYS = (
     "_upload_id",
     "_restore_banner",
 )
-
-
-def _shutdown_server() -> None:
-    """Terminate the Streamlit process and release Windows file locks."""
-    st.warning("Сервер WMS завершает работу. Вы можете закрыть эту вкладку браузера.")
-    time.sleep(0.5)
-    try:
-        os.kill(os.getpid(), signal.SIGTERM)
-    except (OSError, AttributeError):
-        os._exit(0)
 
 
 def _render_pin_screen() -> None:
@@ -662,18 +651,114 @@ def _render_order_card(result: dict[str, Any], *, key_prefix: str) -> None:
 
 
 def _render_header(catalog_size: int) -> None:
-    left, right = st.columns((4, 1))
-    with left:
-        st.title("WMS Ассистент: Мебельный Склад (г. Челябинск)")
-        if catalog_size:
-            st.caption("🟢 Локальная система активна (FAISS + E5)")
-        else:
-            st.caption("🔴 Каталог 1С v8 не загружен")
-    with right:
-        st.write("")
-        if st.button("🧹 Очистить сессию", width="stretch", key="header_clear"):
-            _clear_active_view()
+    st.title("WMS Ассистент: Мебельный Склад (г. Челябинск)")
+    if catalog_size:
+        st.caption("🟢 Локальная система активна (FAISS + E5)")
+    else:
+        st.caption("🔴 Каталог 1С v8 не загружен")
+
+
+def _format_catalog_size(n: int) -> str:
+    """Format a catalog size with a space as thousands separator (e.g. 12 880)."""
+    return f"{n:,}".replace(",", " ")
+
+
+def _render_sidebar() -> tuple[str, int]:
+    """Operator-first sidebar: warehouse status, actions, collapsed diagnostics."""
+    provider = str(st.session_state.get("sidebar_llm_provider", "gemini"))
+    if provider not in ("gemini", "ollama"):
+        provider = "gemini"
+    os.environ["LLM_PROVIDER"] = provider
+
+    catalog_size = 0
+    catalog_error: str | None = None
+    try:
+        _, catalog_size = load_pipeline(provider)
+    except FileNotFoundError as exc:
+        catalog_error = str(exc)
+        notify_error(
+            "Каталог 1С v8 не найден",
+            traceback.format_exc(),
+            filename="catalog_v8.xlsx",
+        )
+
+    if not st.session_state.get("_startup_notified"):
+        notify_startup(collect_system_info(catalog_size=catalog_size))
+        st.session_state["_startup_notified"] = True
+
+    # --- Warehouse Status ---
+    st.markdown("### 📦 Мебельный Склад")
+    if catalog_size:
+        st.caption(f"🟢 **Каталог 1С:** {_format_catalog_size(catalog_size)} позиций")
+        st.caption("🟢 **ИИ-Ассистент:** Активен (FAISS + E5)")
+    else:
+        st.caption("🔴 **Каталог 1С:** не загружен")
+        st.caption("🔴 **ИИ-Ассистент:** неактивен")
+        if catalog_error:
+            st.error(catalog_error)
+
+    st.divider()
+
+    # --- Operator Actions ---
+    if st.button(
+        "➕ Начать новый заказ",
+        key="sidebar_clear",
+        use_container_width=True,
+        type="primary",
+    ):
+        _clear_active_view()
+        st.rerun()
+
+    if is_auth_required():
+        if st.button(
+            "🔒 Выйти / Сменить смену",
+            key="sidebar_logout",
+            use_container_width=True,
+        ):
+            st.session_state["authenticated"] = False
             st.rerun()
+
+    # --- Engineering diagnostics (collapsed by default) ---
+    with st.expander("🛠️ Инженерная диагностика", expanded=False):
+        provider = st.radio(
+            "LLM провайдер",
+            options=["gemini", "ollama"],
+            format_func=lambda value: (
+                "Gemini (облако)" if value == "gemini" else "Ollama (локально)"
+            ),
+            horizontal=True,
+            key="sidebar_llm_provider",
+        )
+        os.environ["LLM_PROVIDER"] = provider
+
+        _, llm_status_line, llm_status_caption = _llm_status_info(provider)
+        st.markdown(llm_status_line)
+        st.caption(llm_status_caption)
+
+        if provider == "gemini":
+            raw_key = os.environ.get("GEMINI_API_KEYS", "") or os.environ.get(
+                "GEMINI_API_KEY", ""
+            )
+            first_key = (raw_key.split(",")[0]).strip() if raw_key else ""
+            st.caption(f"Ключ (preview): `{mask_secret(first_key)}`")
+            if st.button("🔍 Проверить ключи", key="sidebar_ping_llm"):
+                ping = KeyPool.from_env().test_connection(
+                    base_url=resolve_gemini_base_url()
+                )
+                st.toast(ping.message, icon="✅" if ping.ok else "⚠️")
+        elif provider == "ollama":
+            raw_token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+            if raw_token:
+                st.caption(f"Telegram token: `{mask_secret(raw_token)}`")
+
+        st.markdown(
+            "**Контракт WMS:** `[№, Наименование, Штрихкод, Количество, Заказчик]`"
+        )
+        session_id = str(st.session_state.get("session_uuid", "—"))
+        preview = f"{session_id[:8]}…" if len(session_id) > 8 else session_id
+        st.caption(f"Сессия: `{preview}`")
+
+    return provider, catalog_size
 
 
 def _render_process_tab(provider: str, catalog_size: int) -> None:
@@ -965,70 +1050,7 @@ def main() -> None:
     st.session_state["_session_initialized"] = True
 
     with st.sidebar:
-        st.header("Настройки")
-        provider = st.radio(
-            "LLM провайдер",
-            options=["gemini", "ollama"],
-            format_func=lambda value: "Gemini (облако)" if value == "gemini" else "Ollama (локально)",
-            horizontal=True,
-        )
-        os.environ["LLM_PROVIDER"] = provider
-
-        _, llm_status_line, llm_status_caption = _llm_status_info(provider)
-        st.markdown(llm_status_line)
-        st.caption(llm_status_caption)
-
-        if provider == "gemini":
-            # Show masked key preview so operator can verify which key is active
-            # without exposing the full credential in the UI.
-            raw_key = os.environ.get("GEMINI_API_KEYS", "") or os.environ.get("GEMINI_API_KEY", "")
-            first_key = (raw_key.split(",")[0]).strip() if raw_key else ""
-            st.caption(f"Ключ (preview): `{mask_secret(first_key)}`")
-            if st.button("🔍 Проверить ключи", key="sidebar_ping_llm"):
-                ping = KeyPool.from_env().test_connection(base_url=resolve_gemini_base_url())
-                st.toast(ping.message, icon="✅" if ping.ok else "⚠️")
-        elif provider == "ollama":
-            raw_token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
-            if raw_token:
-                st.caption(f"Telegram token: `{mask_secret(raw_token)}`")
-
-        try:
-            _, catalog_size = load_pipeline(provider)
-            st.success(f"Каталог загружен: {catalog_size:,} позиций")
-        except FileNotFoundError as exc:
-            st.error(str(exc))
-            catalog_size = 0
-            notify_error("Каталог 1С v8 не найден", traceback.format_exc(), filename="catalog_v8.xlsx")
-
-        if not st.session_state.get("_startup_notified"):
-            notify_startup(collect_system_info(catalog_size=catalog_size))
-            st.session_state["_startup_notified"] = True
-
-        st.divider()
-        st.markdown(
-            "**Контракт WMS:** `[№, Наименование, Штрихкод, Количество, Заказчик]`"
-        )
-        st.caption(f"Сессия: `{st.session_state.get('session_uuid', '—')[:8]}…`")
-        col_clear1, col_clear2 = st.columns(2)
-        with col_clear1:
-            if st.button("🔄 Новый заказ", key="sidebar_clear", use_container_width=True):
-                _clear_active_view()
-                st.rerun()
-        with col_clear2:
-            if st.button("🧹 Сбросить", key="sidebar_session_reset", use_container_width=True):
-                _clear_active_view()
-                st.rerun()
-
-        if is_auth_required():
-            st.divider()
-            if st.button("🔒 Выйти", key="sidebar_logout", use_container_width=True):
-                st.session_state["authenticated"] = False
-                st.rerun()
-
-        st.divider()
-        st.caption("Завершение работы освобождает папку проекта от блокировки Windows.")
-        if st.button("🛑 Завершить работу сервера", key="sidebar_shutdown"):
-            _shutdown_server()
+        provider, catalog_size = _render_sidebar()
 
     _ensure_restored_session()
     _render_header(catalog_size)
