@@ -1,0 +1,61 @@
+{
+  "date": "2026-08-31",
+  "runs": [
+    {
+      "order_id": "e834a6e033ef0d89",
+      "timestamp": "2026-08-31 11:24:52",
+      "original_filename": "Отборочная Васильева Т. без ШК.xls",
+      "doc_type": "Корпусная мебель (1С 7.7)",
+      "total_rows": 32,
+      "total_places": 45,
+      "matched_auto_count": 1,
+      "auto_no_barcode_count": 19,
+      "quarantine_count": 12,
+      "wms_excel_path": "2026-08-31/WMS_20260831_112452_Отборочная_Васильева_Т._без_ШК.xlsx",
+      "customer_name": "Перемещение (Отборочная Васильева Т. без ШК.xls)",
+      "session_path": "2026-08-31/WMS_20260831_112452_Отборочная_Васильева_Т._без_ШК.session.json"
+    },
+    {
+      "order_id": "a5bff96a365904a0",
+      "timestamp": "2026-08-31 11:36:48",
+      "original_filename": "Отборочная Васильева Т. без ШК.xls",
+      "doc_type": "Корпусная мебель (1С 7.7)",
+      "total_rows": 32,
+      "total_places": 45,
+      "matched_auto_count": 32,
+      "auto_no_barcode_count": 0,
+      "quarantine_count": 0,
+      "wms_excel_path": "2026-08-31/WMS_20260831_113648_Отборочная_Васильева_Т._без_ШК.xlsx",
+      "customer_name": "Васильева Татьяна Юрьевна ИП",
+      "session_path": "2026-08-31/WMS_20260831_113648_Отборочная_Васильева_Т._без_ШК.session.json"
+    },
+    {
+      "order_id": "5a70cea6c3caaab1",
+      "timestamp": "2026-08-31 18:29:01",
+      "original_filename": "Отборочная Васильева Т. без ШК.xls",
+      "doc_type": "Корпусная мебель (1С 7.7)",
+      "total_rows": 32,
+      "total_places": 45,
+      "matched_auto_count": 32,
+      "auto_no_barcode_count": 0,
+      "quarantine_count": 0,
+      "wms_excel_path": "2026-08-31/WMS_20260831_182901_Отборочная_Васильева_Т._без_ШК.xlsx",
+      "customer_name": "Васильева Татьяна Юрьевна ИП",
+      "session_path": "2026-08-31/WMS_20260831_182901_Отборочная_Васильева_Т._без_ШК.session.json"
+    },
+    {
+      "order_id": "9d9c066190b40794",
+      "timestamp": "2026-08-31 18:34:22",
+      "original_filename": "Отборочная Кильдишов без ШК.xls",
+      "doc_type": "Мягкая мебель (Перемещение)",
+      "total_rows": 3,
+      "total_places": 3,
+      "matched_auto_count": 0,
+      "auto_no_barcode_count": 3,
+      "quarantine_count": 0,
+      "wms_excel_path": "2026-08-31/WMS_20260831_183422_Отборочная_Кильдишов_без_ШК.xlsx",
+      "customer_name": "ЦНТ-001415",
+      "session_path": "2026-08-31/WMS_20260831_183422_Отборочная_Кильдишов_без_ШК.session.json"
+    }
+  ]
+}

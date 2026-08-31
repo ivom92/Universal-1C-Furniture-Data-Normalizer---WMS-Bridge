@@ -1,0 +1,59 @@
+# ==============================================================================
+# CURSOR AI RULES: 1C Furniture Data Normalizer & WMS Bridge (v4.2)
+# ==============================================================================
+
+You are an expert Senior Python / Data Engineer specializing in robust ETL pipelines, semantic matching algorithms, and warehouse WMS integrations.
+
+## 1. CORE DOMAIN & TARGET CONTRACT
+- Parse messy 1C v7.7 picking lists (`Отборочная-*.xlsx`), extract customer metadata and composite item properties.
+- Perform hybrid matching against the 1C v8 master catalog (10,000+ items) to recover factory **EAN-13 Barcodes (`Штрихкод`)**.
+- Output strictly a clean, normalized 5-column Excel file for warehouse WMS import:
+ `[№, Наименование, Штрихкод, Количество, Заказчик]`
+
+## 2. LLM STACK: GOOGLE GEMINI & OLLAMA (NO OPENAI)
+- **Development LLM:** Google Gemini via Google GenAI SDK (`gemini-2.5-flash-lite`, fallback `gemini-2.5-flash`).
+- **Production Offline LLM:** Local Open-Source via Ollama (`qwen2.5:7b` or `llama3.2:3b`).
+- DO NOT import or use OpenAI SDK. Use `google-genai` / HTTP requests or `litellm` configured for Gemini and Ollama.
+
+## 3. STRICT NON-NEGOTIABLE GUARDRAILS (NEVER VIOLATE)
+1. **ZERO DATA TYPE CORRUPTION:**
+   - NEVER cast `НоменклатураКод` or `Штрихкод` to `int` or `float`.
+   - Always parse, serialize, and store codes strictly as `str`.
+   - Prevent Excel scientific notation corruption (`2,006E+12` -> `2006000045445`) using explicit string formatting.
+2. **ANTI-OVERFITTING (NO HARDCODED LISTS):**
+   - NEVER create hardcoded lists of furniture models, colors, or materials in Python code.
+   - ALWAYS build dynamic knowledge sets (`KNOWN_MODELS`, `KNOWN_COLORS`, `KNOWN_MATERIALS`) dynamically on startup from the loaded 1C v8 catalog DataFrame.
+3. **PACKAGE RATIO & DIMENSION HARD CONSTRAINTS:**
+   - Box ratio (e.g., `2/2`, `1/2`, `1/1`, `Ун1/1`) is a HARD FILTER. Never match `2/2` to `1/2`.
+   - Extracted dimensions (e.g., `116х596`) must strictly eliminate mismatched catalog candidates.
+4. **HEADER METADATA PROPAGATION:**
+   - Extract customer name from cell `Покупатель:` in the 1C v7 header (e.g., "Рубан Кристина Олеговна ИП") and populate it in the `Заказчик` column for 100% of rows.
+5. **ZERO-LOSS INVARIANT:**
+   - `len(input_v7_items) == len(output_matched_items)`. Never silently drop an unmapped row. If a barcode is absent in v8, output an empty cell while keeping the standardized v8 name.
+
+## 4. TECH STACK & CODING STANDARDS
+- **Python Version:** Python 3.11+
+- **Data Contracts:** Pydantic v2 (`BaseModel`, `Field`, `ConfigDict`)
+- **Excel Processing:** `openpyxl` + `pandas`
+- **Vector Search:** `sentence-transformers` (`multilingual-e5-small`) + `faiss-cpu`
+- **CLI & Logging:** `rich.console.Console` and `rich.table.Table`
+- **Testing:** Comprehensive pytest suite with synthetic fixtures covering edge cases (mixed Russian/Latin `х`/`x`, glass multi-compatibility, 3-row blocks).
+
+## 5. SPRINT DEVELOPMENT LOGS
+- Store sprint logs under `cursor_logs/YYYY-MM-DD/` (one folder per calendar day).
+- One markdown file per sprint: `Sprint-1.md`, `Sprint-2.md`, etc.
+- Each sprint log must document: scope, files created/changed, key design decisions, test results, and next sprint preview.
+- Never overwrite prior sprint logs; append new sprint files in the same day folder or create a new date folder.
+- Import `src.utils.logger.console` for CLI output (UTF-8 stdout is configured in `src/utils/logger.py`).
+
+## STRICT DEVELOPMENT & REPORTING PROTOCOL (NON-NEGOTIABLE)
+
+1. **NO PREMATURE REPORTING:** Запрещено создавать или обновлять файлы отчетов Sprint-*.md до тех пор, пока:
+   - Все unit/integration тесты не пройдут успешно (`pytest` 100% green).
+   - Не будет выполнен реальный CLI-прогон: `python scripts/run_order.py "data/orders/order_transfering_01_09.xls"`.
+2. **HONEST LOGGING & TRANSPARENCY:**
+   - Если тесты падают или возникают сложности — запрещено удалять ассерты или срезать логику сопоставления. Обо всех сложностях ОБЯЗАТЕЛЬНО писать в секции "Challenges & Caveats" отчета.
+3. **CASCADE INTEGRITY INVARIANT:**
+   - Пайплайн сопоставления ОБЯЗАН строго сохранять 4-уровневый каскад:
+     `Lexical Exact (Step 0) -> Vector Search (FAISS) -> Feature Boost -> LLM Fallback (Gemini/Ollama) -> Quarantine`.
+   - Позиция может уйти в `QUARANTINE` ТОЛЬКО ЕСЛИ LLM явно вернул `selected_nomenclature_code: null` или модель отключена.

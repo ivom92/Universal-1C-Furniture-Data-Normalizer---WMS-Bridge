@@ -1,0 +1,33 @@
+{
+  "date": "2026-08-30",
+  "runs": [
+    {
+      "order_id": "3bdf4927c9c00bce",
+      "timestamp": "2026-08-30 21:01:05",
+      "original_filename": "Перемещение 01.09 кровать.xls",
+      "doc_type": "Мягкая мебель (Перемещение)",
+      "total_rows": 3,
+      "total_places": 3,
+      "matched_auto_count": 0,
+      "auto_no_barcode_count": 3,
+      "quarantine_count": 0,
+      "wms_excel_path": "2026-08-30/WMS_20260830_210105_Перемещение_01.09_кровать.xlsx",
+      "customer_name": "ЦНТ-001513",
+      "session_path": "2026-08-30/WMS_20260830_210105_Перемещение_01.09_кровать.session.json"
+    },
+    {
+      "order_id": "c4a960eebb21fb63",
+      "timestamp": "2026-08-30 21:01:26",
+      "original_filename": "Перемещение 01.09.xls",
+      "doc_type": "Корпусная мебель (1С 7.7)",
+      "total_rows": 384,
+      "total_places": 871,
+      "matched_auto_count": 353,
+      "auto_no_barcode_count": 31,
+      "quarantine_count": 0,
+      "wms_excel_path": "2026-08-30/WMS_20260830_210126_Перемещение_01.09.xlsx",
+      "customer_name": "РС УрФО Империал",
+      "session_path": "2026-08-30/WMS_20260830_210126_Перемещение_01.09.session.json"
+    }
+  ]
+}

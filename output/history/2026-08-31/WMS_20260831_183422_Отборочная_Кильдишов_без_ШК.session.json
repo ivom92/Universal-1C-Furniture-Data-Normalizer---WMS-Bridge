@@ -1,0 +1,92 @@
+{
+  "decisions": [
+    {
+      "raw_block": {
+        "line_number": 1,
+        "client_description": "SF д Кровать Агата с под мех 90*200 bingo pebble Изголовье+ДВП+царга большая 1/3",
+        "item_type": "Упаковка",
+        "quantity": 1,
+        "factory_alias": null,
+        "order_service_line": "ЦНТ-001415",
+        "excel_row_start": 42
+      },
+      "extracted_features": {
+        "package_ratio": null,
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": [],
+        "sub_brands": [],
+        "is_composite_color": false
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": null,
+      "confidence_score": 1.0,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 2,
+        "client_description": "SF д Кровать Агата с под мех 90*200 bingo pebble Изголовье малое+фурнитура+царга малая 2/3",
+        "item_type": "Упаковка",
+        "quantity": 1,
+        "factory_alias": null,
+        "order_service_line": "ЦНТ-001415",
+        "excel_row_start": 43
+      },
+      "extracted_features": {
+        "package_ratio": null,
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": [],
+        "sub_brands": [],
+        "is_composite_color": false
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": null,
+      "confidence_score": 1.0,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 3,
+        "client_description": "SF д Кровать Агата с под мех 90*200 bingo pebble Ортопед.основание 3/3",
+        "item_type": "Упаковка",
+        "quantity": 1,
+        "factory_alias": null,
+        "order_service_line": "ЦНТ-001415",
+        "excel_row_start": 44
+      },
+      "extracted_features": {
+        "package_ratio": null,
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": [],
+        "sub_brands": [],
+        "is_composite_color": false
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": null,
+      "confidence_score": 1.0,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    }
+  ],
+  "customer_name": "ЦНТ-001415",
+  "upload_name": "Отборочная Кильдишов без ШК.xls",
+  "doc_type_label": "Мягкая мебель (Перемещение)",
+  "operator_overrides": {}
+}

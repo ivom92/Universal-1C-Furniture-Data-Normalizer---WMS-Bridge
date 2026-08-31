@@ -1,0 +1,1204 @@
+{
+  "decisions": [
+    {
+      "raw_block": {
+        "line_number": 1,
+        "client_description": "Àâðîðà Êðîâàòü 90 ñî âñòðîåííûì îñíîâàíèåì ïîä ìàòðàñ 1/2 áåëûé/àòåëüå ñâåòëûé",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP ñï Àâðîðà êðîâàòü 90*200 á/ì (îñíîâàíèå ËÄÑÏ) = áåëûé/àòåëüå ñâåòëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 8
+      },
+      "extracted_features": {
+        "package_ratio": "1/2",
+        "dimensions": [
+          "90x200"
+        ],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.8656279134750366,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Отсутствует в каталоге фабрики"
+    },
+    {
+      "raw_block": {
+        "line_number": 2,
+        "client_description": "Àâðîðà Êðîâàòü 90 ñî âñòðîåííûì îñíîâàíèåì ïîä ìàòðàñ 2/2 áåëûé",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP ñï Àâðîðà êðîâàòü 90*200 á/ì (îñíîâàíèå ËÄÑÏ) = áåëûé/àòåëüå ñâåòëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 11
+      },
+      "extracted_features": {
+        "package_ratio": "2/2",
+        "dimensions": [
+          "90x200"
+        ],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.8674714851379395,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Отсутствует в каталоге фабрики"
+    },
+    {
+      "raw_block": {
+        "line_number": 3,
+        "client_description": "Àë ̧íà Øêàô 3-õ äâåðíûé (êîðïóñ) 2/2 äóá ñîíîìà",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñï Àë ̧íà øêàô 3äâ áåç çåðêàë = äóá ñîíîìà/áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 14
+      },
+      "extracted_features": {
+        "package_ratio": "2/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.0,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Артикул не найден в каталоге v8"
+    },
+    {
+      "raw_block": {
+        "line_number": 4,
+        "client_description": "Àë ̧íà Øêàô 3-õ äâåðíûé (êîðïóñ, ôàñàäû è ôóðíèòóðà) 1/2 äóá ñîíîìà/áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñï Àë ̧íà øêàô 3äâ áåç çåðêàë = äóá ñîíîìà/áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 17
+      },
+      "extracted_features": {
+        "package_ratio": "1/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Маттео Стол журнальный (корпус и фурнитура) Белый упаковка 1/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000072678",
+        "Штрихкод": null,
+        "Вес": 20.751,
+        "Объем": 0.047,
+        "Высота": 61.0,
+        "Длина": 1104.0,
+        "Глубина": 700.0,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8650138664245606,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 5,
+        "client_description": "Ãîñòèíàÿ Ðèàíà 2.07ì (êîðïóñ, ôàñàäû è ôóðíèòóðà) 2/2 Âîòàí/Àíòðàöèò",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñò Ðèàíà 2,07ì = âîòàí/àíòðàöèò Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 20
+      },
+      "extracted_features": {
+        "package_ratio": "2/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Маттео Стол журнальный (профили) Дымчатый зелёный упаковка 2/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000078900",
+        "Штрихкод": null,
+        "Вес": 6.103,
+        "Объем": 0.012,
+        "Высота": 83.0,
+        "Длина": 956.0,
+        "Глубина": 152.0,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8701034474372864,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 6,
+        "client_description": "Ãîñòèíàÿ Ðèàíà 2.07ì/2,5ì (êîðïóñ, ôàñàäû è ôóðíèòóðà) 1/2 Âîòàí/Àíòðàöèò",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñò Ðèàíà 2,07ì = âîòàí/àíòðàöèò Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 23
+      },
+      "extracted_features": {
+        "package_ratio": "1/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Маттео Стол журнальный (корпус и фурнитура) Белый упаковка 1/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000072678",
+        "Штрихкод": null,
+        "Вес": 20.751,
+        "Объем": 0.047,
+        "Высота": 61.0,
+        "Длина": 1104.0,
+        "Глубина": 700.0,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8706248688697815,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 7,
+        "client_description": "ÊÄÐ ê Ñòîëåøíèöà 27ìì 1U (êàò1) 1,80ì 5270/FL (äóá êëàññè÷åñêèé)",
+        "item_type": "",
+        "quantity": 4,
+        "factory_alias": "ÊÄÐ ê Ñòîëåøíèöà 27ìì 1U (êàò1) 1,80ì = 5270/FL (äóá êëàññè÷åñêèé) Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 26
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Столешница 27 мм 1,1м Дуб классический 5270/FL упаковка 1/1",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000100894",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8814443635940552,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 8,
+        "client_description": "Íèêà Êëàññèê Êóõíÿ 1,8ì (ôàñàäû è ôóðíèòóðà) 1/3 Áåëîå äåðåâî",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP êñò Íèêà Êëàññèêà ê-ò 1,8ì = áåëîå äåðåâî Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 29
+      },
+      "extracted_features": {
+        "package_ratio": "1/3",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Гостиная Твинс Тумба ТВ 180 (корпус) Ателье светлый упаковка 1/3",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000071300",
+        "Штрихкод": null,
+        "Вес": 17.23,
+        "Объем": 0.042,
+        "Высота": 58.0,
+        "Длина": 1850.0,
+        "Глубина": 392.0,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.866006760597229,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 9,
+        "client_description": "Íèêà Êóõíÿ 1,8ì (êîðïóñ) 2/3 Áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP êñò Íèêà Êëàññèêà ê-ò 1,8ì = áåëîå äåðåâî Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 32
+      },
+      "extracted_features": {
+        "package_ratio": "2/3",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Фасады к кухне Равенна Тренд Софт В80 выт Монолит глоу упаковка 2/3",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000079794",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.871060757637024,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 10,
+        "client_description": "Íèêà Êóõíÿ 1,8ì (êîðïóñ) 3/3 Áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP êñò Íèêà Êëàññèêà ê-ò 1,8ì = áåëîå äåðåâî Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 35
+      },
+      "extracted_features": {
+        "package_ratio": "3/3",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Фурнитура к системе Модесто Тумба ТВ 200 Графит/Фон дарк упаковка 3/3",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000111802",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8675168442726136,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 11,
+        "client_description": "Îðôåé Ãîñòèíàÿ (êîðïóñ è ôóðíèòóðà) 1/4 Äóá ñîíîìà",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñò Îðôåé 2,72ì = ñîíîìà/áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 38
+      },
+      "extracted_features": {
+        "package_ratio": "1/4",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Маттео Витрина 1д1в (корпус и фурнитура) Белый упаковка 1/4",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000072675",
+        "Штрихкод": null,
+        "Вес": 28.573,
+        "Объем": 0.063,
+        "Высота": 76.0,
+        "Длина": 1926.0,
+        "Глубина": 431.0,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8716080474853516,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 12,
+        "client_description": "Îðôåé Ãîñòèíàÿ (êîðïóñ è ôóðíèòóðà) 2/4 Äóá ñîíîìà",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñò Îðôåé 2,72ì = ñîíîìà/áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 41
+      },
+      "extracted_features": {
+        "package_ratio": "2/4",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.0,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Артикул не найден в каталоге v8"
+    },
+    {
+      "raw_block": {
+        "line_number": 13,
+        "client_description": "Îðôåé Ãîñòèíàÿ (êîðïóñ, ôàñàäû è ñòåêëî) 3/4 Äóá ñîíîìà/Áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñò Îðôåé 2,72ì = ñîíîìà/áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 44
+      },
+      "extracted_features": {
+        "package_ratio": "3/4",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Гостиная Марк комплект Шкаф-Пенал ПР Венге/Дуб сонома упаковка 3/4",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000038152",
+        "Штрихкод": "4603734805444",
+        "Вес": 33.1,
+        "Объем": 0.071,
+        "Высота": 110.0,
+        "Длина": 1320.0,
+        "Глубина": 490.0,
+        "ЭтикеткаМодель": "Гостиная Марк",
+        "Модуль": "Шкаф-Пенал ПР",
+        "Цвет": "Венге/Дуб сонома",
+        "Начинка": "корпус",
+        "Упаковка": "3/4",
+        "ТипЭтикетки": "корпус",
+        "ДС": "ЕАЭС N RU Д-RU.PA03.B.95407/23",
+        "ЗонаХранения": "1. СЖ (Стеллажи)"
+      },
+      "confidence_score": 0.8655021476745606,
+      "candidates": [],
+      "match_method": "vector_auto",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 14,
+        "client_description": "Îðôåé Ãîñòèíàÿ (êîðïóñ, ôàñàäû è ôóðíèòóðà) 4/4 Äóá ñîíîìà/Áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñò Îðôåé 2,72ì = ñîíîìà/áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 47
+      },
+      "extracted_features": {
+        "package_ratio": "4/4",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Фурнитура к системе Модесто Шкаф 2д1з Антрацит/Фон дарк упаковка 4/4",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000094519",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8707320976257324,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 15,
+        "client_description": "ÏÔ Çåðêàëî 1365õ266 ×èêàãî (ïîëèðîâêà)",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP ñï ×èêàãî âàéò øêàô 4ä2ÿù (2 çåðêàëà) = áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001228)",
+        "order_service_line": "",
+        "excel_row_start": 50
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.8744606065750122,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Отсутствует в каталоге фабрики"
+    },
+    {
+      "raw_block": {
+        "line_number": 16,
+        "client_description": "Ñèñòåìà Êðîâàòü 160 ñ ëàìåëÿìè (ëàìåëè) Óí1/1",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP ñï ×èêàãî âàéò êðîâàòü 160 á/ì ñ ëàìåëüþ = áåëûé, IMP ñï ×èêàãî êðîâàòü 160 á/ì ñ ëàìåëüþ = àòåëüå ñâåòëûé/áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 53
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.896910994052887,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Отсутствует в каталоге фабрики"
+    },
+    {
+      "raw_block": {
+        "line_number": 17,
+        "client_description": "Ñèñòåìà Îíèêñ Âàéò Ñòîë ïèñüìåííûé 1ä1ÿù (êîðïóñ, ôàñàäû è ôóðíèòóðà) 1/1 Áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ä Îíèêñ âàéò ñòîë ïèñüìåííûé 1ä1ÿù = áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001228)",
+        "order_service_line": "",
+        "excel_row_start": 56
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Ортопедическое основание с кронштейнами 160х200 IMP упаковка Ун1/1",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000099931",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.879129855632782,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 18,
+        "client_description": "Ñèñòåìà Ôåíèêñ Øêàô 3ä (êîðïóñ è ôóðíèòóðà) 1/2 Ãðàôèò",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP ñõ Ôåíèêñ-2 øêàô 3äâ = ãðàôèò/ôîí äàðê Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 59
+      },
+      "extracted_features": {
+        "package_ratio": "1/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Маттео Стол журнальный (корпус и фурнитура) Белый упаковка 1/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000072678",
+        "Штрихкод": null,
+        "Вес": 20.751,
+        "Объем": 0.047,
+        "Высота": 61.0,
+        "Длина": 1104.0,
+        "Глубина": 700.0,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8676958966255188,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 19,
+        "client_description": "Ñèñòåìà Ôåíèêñ Øêàô 3ä (êîðïóñ) 2/2 Ãðàôèò",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP ñõ Ôåíèêñ-2 øêàô 3äâ = ãðàôèò/ôîí äàðê Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 62
+      },
+      "extracted_features": {
+        "package_ratio": "2/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.0,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Артикул не найден в каталоге v8"
+    },
+    {
+      "raw_block": {
+        "line_number": 20,
+        "client_description": "Ñèñòåìà Ôåíèêñ-2 Øêàô 3ä (ôàñàäû) Óí1/1 Ãðàôèò/Ôîí äàðê",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP ñõ Ôåíèêñ-2 øêàô 3äâ = ãðàôèò/ôîí äàðê Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 65
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Ортопедическое основание с кронштейнами 160х200 IMP упаковка Ун1/1",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000099931",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8819351482391358,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 21,
+        "client_description": "Ñèñòåìà Ôåíèêñ-3 Øêàô 120 3ä3ÿù (êîðïóñ è ôóðíèòóðà) 1/1 Ãðàôèò",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñõ Ôåíèêñ-3 øêàô 120 3ä 3ÿù = ãðàôèò Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001228)",
+        "order_service_line": "",
+        "excel_row_start": 68
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.882350115776062,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Отсутствует в каталоге фабрики"
+    },
+    {
+      "raw_block": {
+        "line_number": 22,
+        "client_description": "Ñèñòåìà Ôåíèêñ-3 Øêàô 120 3ä3ÿù/135 3ä3ÿù/160 4ä3ÿù (êîðïóñ è ôàñàä) Óí1/1 Ãðàôèò",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñõ Ôåíèêñ-3 øêàô 120 3ä 3ÿù = ãðàôèò Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001228)",
+        "order_service_line": "",
+        "excel_row_start": 71
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.8771012711524964,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Отсутствует в каталоге фабрики"
+    },
+    {
+      "raw_block": {
+        "line_number": 23,
+        "client_description": "Ñèñòåìà Ôåíèêñ-3 Øêàô 80 2ä3ÿù/120 3ä3ÿù/120 5ä1ÿù/160 4ä3ÿù (ôàñàäû) Óí1/1 Ãðàôèò",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñõ Ôåíèêñ-3 øêàô 120 3ä 3ÿù = ãðàôèò Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001228)",
+        "order_service_line": "",
+        "excel_row_start": 74
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.8882038283348084,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Отсутствует в каталоге фабрики"
+    },
+    {
+      "raw_block": {
+        "line_number": 24,
+        "client_description": "Ñèñòåìà Ôåíèêñ-3 Øêàô 80 2ä3ÿù/120 3ä3ÿù/160 4ä3ÿù (êîðïóñ è ôàñàäû) Óí1/1 Ãðàôèò",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñõ Ôåíèêñ-3 øêàô 120 3ä 3ÿù = ãðàôèò Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001228)",
+        "order_service_line": "",
+        "excel_row_start": 77
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.8830442714691162,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Отсутствует в каталоге фабрики"
+    },
+    {
+      "raw_block": {
+        "line_number": 25,
+        "client_description": "Ñèñòåìà ×èêàãî Âàéò Êðîâàòü 160 ñ ëàìåëÿìè (êîðïóñ è ôóðíèòóðà) 1/2 Áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñï ×èêàãî âàéò êðîâàòü 160 á/ì ñ ëàìåëüþ = áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 80
+      },
+      "extracted_features": {
+        "package_ratio": "1/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Модесто Кровать 160 с подъемным механизмом (корпус и фурнитура) Антрацит упаковка 1/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000094587",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8776454019546509,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 26,
+        "client_description": "Ñèñòåìà ×èêàãî Âàéò Êðîâàòü 160 ñ ëàìåëÿìè (êîðïóñ) 2/2 Áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñï ×èêàãî âàéò êðîâàòü 160 á/ì ñ ëàìåëüþ = áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 83
+      },
+      "extracted_features": {
+        "package_ratio": "2/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Модесто Кровать 160 с подъемным механизмом (корпус) Антрацит упаковка 2/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000094588",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8738403010368347,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 27,
+        "client_description": "Ñèñòåìà ×èêàãî Âàéò Øêàô 4ä2ÿù (êîðïóñ è ôàñàäû) 2/2 Áåëûé",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP ñï ×èêàãî âàéò øêàô 4ä2ÿù = áåëûé, IMP ñï ×èêàãî âàéò øêàô 4ä2ÿù (2 çåðêàëà) = áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001228)",
+        "order_service_line": "",
+        "excel_row_start": 86
+      },
+      "extracted_features": {
+        "package_ratio": "2/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Барселона Сундук (фурнитура) упаковка 2/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000082811",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8595397758483887,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 28,
+        "client_description": "Ñèñòåìà ×èêàãî Âàéò Øêàô 4ä2ÿù (êîðïóñ è ôóðíèòóðà) 1/2 Áåëûé",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP ñï ×èêàãî âàéò øêàô 4ä2ÿù = áåëûé, IMP ñï ×èêàãî âàéò øêàô 4ä2ÿù (2 çåðêàëà) = áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001228)",
+        "order_service_line": "",
+        "excel_row_start": 89
+      },
+      "extracted_features": {
+        "package_ratio": "1/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Маттео Стол журнальный (корпус и фурнитура) Белый упаковка 1/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000072678",
+        "Штрихкод": null,
+        "Вес": 20.751,
+        "Объем": 0.047,
+        "Высота": 61.0,
+        "Длина": 1104.0,
+        "Глубина": 700.0,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8627383399009705,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 29,
+        "client_description": "Ñèñòåìà ×èêàãî Êîìîä 5ÿù (êîðïóñ, ôàñàäû è ôóðíèòóðà) 1/1 Àòåëüå ñâåòëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñï ×èêàãî êîìîä 5ÿù = àòåëüå ñâåòëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001228)",
+        "order_service_line": "",
+        "excel_row_start": 92
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Ортопедическое основание с кронштейнами 180х200 IMP упаковка Ун1/1",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000099932",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.873325138092041,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 30,
+        "client_description": "Ñèñòåìà ×èêàãî Êðîâàòü 160 ñ ëàìåëÿìè (êîðïóñ è ôóðíèòóðà) 1/2 Àòåëüå ñâåòëûé/Áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñï ×èêàãî êðîâàòü 160 á/ì ñ ëàìåëüþ = àòåëüå ñâåòëûé/áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 95
+      },
+      "extracted_features": {
+        "package_ratio": "1/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Модесто Кровать 160 с подъемным механизмом (корпус и фурнитура) Антрацит упаковка 1/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000094587",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8775668430328369,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 31,
+        "client_description": "Ñèñòåìà ×èêàãî Êðîâàòü 160 ñ ëàìåëÿìè (êîðïóñ) 2/2 Àòåëüå ñâåòëûé/Áåëûé",
+        "item_type": "",
+        "quantity": 1,
+        "factory_alias": "IMP ñï ×èêàãî êðîâàòü 160 á/ì ñ ëàìåëüþ = àòåëüå ñâåòëûé/áåëûé Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491)",
+        "order_service_line": "",
+        "excel_row_start": 98
+      },
+      "extracted_features": {
+        "package_ratio": "2/2",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": {
+        "Номенклатура": "Система Модесто Кровать 160 с подъемным механизмом (корпус) Антрацит упаковка 2/2",
+        "ХарактеристикаНоменклатуры": null,
+        "НоменклатураКод": "00000094588",
+        "Штрихкод": null,
+        "Вес": null,
+        "Объем": null,
+        "Высота": null,
+        "Длина": null,
+        "Глубина": null,
+        "ЭтикеткаМодель": null,
+        "Модуль": null,
+        "Цвет": null,
+        "Начинка": null,
+        "Упаковка": null,
+        "ТипЭтикетки": null,
+        "ДС": null,
+        "ЗонаХранения": null
+      },
+      "confidence_score": 0.8720813083648682,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 32,
+        "client_description": "Ñòåêëî 4ìì 614õ296 Íèêà",
+        "item_type": "",
+        "quantity": 2,
+        "factory_alias": "IMP êñò Íèêà Êëàññèêà ê-ò 1,8ì = áåëîå äåðåâî Ïðîäàæè îïòîâûå ÓÐË_ÎÏ00233 (Çàêàç: ÖÍÒ-001491) ÈÒÎÃÎ ìåñò ïî îòáîðî÷íîé âåäîìîñòè Êëàäîâùèê __________________ Ýêñïåäèòîð ______________________",
+        "order_service_line": "",
+        "excel_row_start": 101
+      },
+      "extracted_features": {
+        "package_ratio": "1/1",
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "QUARANTINE",
+      "matched_entity": null,
+      "confidence_score": 0.850298433303833,
+      "candidates": [],
+      "match_method": null,
+      "status_detail": "Отсутствует в каталоге фабрики"
+    }
+  ],
+  "customer_name": "Перемещение (Отборочная Васильева Т. без ШК.xls)",
+  "upload_name": "Отборочная Васильева Т. без ШК.xls",
+  "doc_type_label": "Корпусная мебель (1С 7.7)",
+  "operator_overrides": {}
+}

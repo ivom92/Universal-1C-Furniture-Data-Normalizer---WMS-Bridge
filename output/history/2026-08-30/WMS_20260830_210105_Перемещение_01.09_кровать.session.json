@@ -1,0 +1,86 @@
+{
+  "decisions": [
+    {
+      "raw_block": {
+        "line_number": 1,
+        "client_description": "SF сп Кровать Вена с под мех 140*200 palermo shadow Изголовье/Дно бельевого короба 1/3",
+        "item_type": "Упаковка",
+        "quantity": 1,
+        "factory_alias": null,
+        "order_service_line": "ЦНТ-001513",
+        "excel_row_start": 10
+      },
+      "extracted_features": {
+        "package_ratio": null,
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": null,
+      "confidence_score": 1.0,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 2,
+        "client_description": "SF сп Кровать Вена с под мех 140*200 palermo shadow Боковины/Фурнитура/Изножье 2/3",
+        "item_type": "Упаковка",
+        "quantity": 1,
+        "factory_alias": null,
+        "order_service_line": "ЦНТ-001513",
+        "excel_row_start": 11
+      },
+      "extracted_features": {
+        "package_ratio": null,
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": null,
+      "confidence_score": 1.0,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    },
+    {
+      "raw_block": {
+        "line_number": 3,
+        "client_description": "SF сп Кровать Вена с под мех 140*200 palermo shadow Комплект основания сварного 1980*1390 3/3",
+        "item_type": "Упаковка",
+        "quantity": 1,
+        "factory_alias": null,
+        "order_service_line": "ЦНТ-001513",
+        "excel_row_start": 12
+      },
+      "extracted_features": {
+        "package_ratio": null,
+        "dimensions": [],
+        "alternative_widths": [],
+        "thicknesses": [],
+        "matched_part_types": [],
+        "matched_colors": [],
+        "matched_models": []
+      },
+      "status": "MATCHED_AUTO",
+      "matched_entity": null,
+      "confidence_score": 1.0,
+      "candidates": [],
+      "match_method": "AUTO_NO_BARCODE",
+      "status_detail": null
+    }
+  ],
+  "customer_name": "ЦНТ-001513",
+  "upload_name": "Перемещение 01.09 кровать.xls",
+  "doc_type_label": "Мягкая мебель (Перемещение)",
+  "operator_overrides": {}
+}
