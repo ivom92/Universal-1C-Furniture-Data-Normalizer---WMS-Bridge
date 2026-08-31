@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-import os
 import sys
 import time
+from dataclasses import dataclass
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -18,18 +18,24 @@ try:
 except ImportError:
     pass
 
-from src.matcher.key_rotator import parse_gemini_api_keys
-from src.matcher.llm_resolver import (
-    LLMResolver,
-    build_gemini_client,
-    gemini_models_list_url,
-    resolve_gemini_base_url,
-)
+from src.config import get_config
+from src.llm.gemini_client import build_gemini_client
+from src.matcher.llm_resolver import LLMResolver
 from src.models import CatalogEntity, ExtractedFeatures, LLMResolutionResponse, MatchCandidate, RawOrderBlock
 from src.utils.logger import console
 
-_PING_MODEL = "gemini-3.5-flash-lite"
 _PING_PROMPT = "Ping: ответь одним словом OK"
+_EMPTY_KEYS_HINT = (
+    "⚠️ Переменная GEMINI_API_KEYS пуста. Добавьте ключи в .env или Coolify."
+)
+
+
+@dataclass(frozen=True)
+class KeyPingResult:
+    index: int
+    ok: bool
+    latency_ms: float
+    error_code: str | None = None
 
 
 def _mask_key_suffix(api_key: str) -> str:
@@ -50,15 +56,21 @@ def _interpret_gemini_error(exc: BaseException) -> tuple[str, str]:
     if "403" in upper or "PERMISSION_DENIED" in upper or "FORBIDDEN" in upper:
         return "403", "PERMISSION_DENIED / access forbidden"
     if "404" in upper or "NOT_FOUND" in upper:
-        return "404", f"NOT_FOUND — model {_PING_MODEL} unavailable"
+        return "404", "NOT_FOUND — model unavailable"
     if "504" in upper or "DEADLINE_EXCEEDED" in upper or "TIMEOUT" in upper:
         return "504", "DEADLINE_EXCEEDED / timeout"
     return type(exc).__name__, str(exc)
 
 
-def _print_config(keys: list[str], base_url: str | None, model: str) -> None:
-    provider = os.environ.get("LLM_PROVIDER", "gemini").strip().lower()
+def _format_ok_status(index: int, latency_ms: float) -> str:
+    return f"🟢 Ключ #{index}: OK (Задержка {latency_ms:.0f}мс)"
 
+
+def _format_error_status(index: int, error_code: str) -> str:
+    return f"🔴 Ключ #{index}: Ошибка ({error_code})"
+
+
+def _print_config(keys: list[str], base_url: str | None, model: str, provider: str) -> None:
     console.print("[bold]Диагностика Gemini API[/bold]")
     console.print(f"  LLM_PROVIDER:    {provider}")
     console.print(f"  GEMINI_API_KEYS: {len(keys)} ключ(ей) в пуле")
@@ -67,37 +79,14 @@ def _print_config(keys: list[str], base_url: str | None, model: str) -> None:
     console.print()
 
 
-def _probe_models_list(api_key: str, base_url: str | None) -> bool:
-    import httpx
-
-    url = gemini_models_list_url(base_url)
-    console.print(f"[dim]Проверка списка моделей ({_mask_key_suffix(api_key)}): {url}[/dim]")
-    try:
-        with httpx.Client(timeout=10.0) as client:
-            response = client.get(url, params={"key": api_key})
-        if response.status_code == 200:
-            console.print(f"[green]  models.list → HTTP {response.status_code}[/green]")
-            return True
-        code, msg = _interpret_gemini_error(Exception(f"HTTP {response.status_code} {response.text[:120]}"))
-        console.print(f"[red]  models.list → HTTP {response.status_code}[/red]")
-        console.print(f"[dim]  {response.text[:300]}[/dim]")
-        console.print(f"  → {code} - {msg}")
-        return False
-    except Exception as exc:
-        code, msg = _interpret_gemini_error(exc)
-        console.print(f"[red]  models.list → {type(exc).__name__}: {exc}[/red]")
-        console.print(f"  → {code} - {msg}")
-        return False
-
-
-def _ping_single_key(
+def _ping_generate_content(
     index: int,
-    total: int,
     api_key: str,
+    *,
     base_url: str | None,
     model: str,
-) -> bool:
-    label = f"[Ключ {index}/{total}] {_mask_key_suffix(api_key)}"
+) -> KeyPingResult:
+    """Send a micro ``generateContent`` request through the configured Cloudflare proxy."""
     started = time.perf_counter()
     try:
         client = build_gemini_client(api_key, timeout=25.0, base_url=base_url)
@@ -105,21 +94,26 @@ def _ping_single_key(
             model=model,
             contents=_PING_PROMPT,
         )
-        elapsed = time.perf_counter() - started
+        elapsed_ms = (time.perf_counter() - started) * 1000
         text = (response.text or "").strip()
         if not text:
-            console.print(f"{label} ──► [red]🔴 ОШИБКА: EMPTY - Пустой ответ от модели[/red]")
-            return False
-        console.print(f"{label} ──► [green]🟢 OK (Время ответа: {elapsed:.2f}s)[/green]")
-        return True
+            return KeyPingResult(index=index, ok=False, latency_ms=elapsed_ms, error_code="EMPTY")
+        return KeyPingResult(index=index, ok=True, latency_ms=elapsed_ms)
     except Exception as exc:
-        elapsed = time.perf_counter() - started
-        code, msg = _interpret_gemini_error(exc)
-        console.print(
-            f"{label} ──► [red]🔴 ОШИБКА: {code} - {msg}[/red] "
-            f"[dim](после {elapsed:.2f}s)[/dim]"
-        )
-        return False
+        elapsed_ms = (time.perf_counter() - started) * 1000
+        code, _msg = _interpret_gemini_error(exc)
+        return KeyPingResult(index=index, ok=False, latency_ms=elapsed_ms, error_code=code)
+
+
+def _print_key_result(result: KeyPingResult, api_key: str) -> None:
+    suffix = _mask_key_suffix(api_key)
+    if result.ok:
+        console.print(f"{_format_ok_status(result.index, result.latency_ms)} [dim]{suffix}[/dim]")
+        return
+    console.print(
+        f"{_format_error_status(result.index, result.error_code or 'UNKNOWN')} "
+        f"[dim]{suffix}[/dim]"
+    )
 
 
 def _test_matching_contract(base_url: str | None, model: str) -> bool:
@@ -199,43 +193,43 @@ def _test_matching_contract(base_url: str | None, model: str) -> bool:
 
 
 def main() -> None:
-    keys = parse_gemini_api_keys()
-    base_url = resolve_gemini_base_url()
-    model = os.environ.get("GEMINI_MODEL", _PING_MODEL).strip()
+    config = get_config()
+    keys = config.gemini_api_keys
+    base_url = config.gemini_base_url
+    model = config.gemini_model
+    provider = config.llm_provider.strip().lower()
 
-    _print_config(keys, base_url, model)
+    _print_config(keys, base_url, model, provider)
 
     if not keys:
-        console.print("[red]GEMINI_API_KEYS / GEMINI_API_KEY не заданы. Заполните .env и повторите.[/red]")
+        console.print(f"[yellow]{_EMPTY_KEYS_HINT}[/yellow]")
         raise SystemExit(1)
 
-    console.print(f"[bold]Найден пул из {len(keys)} ключей Gemini API[/bold]")
+    console.print(f"[bold]Проверка пула из {len(keys)} ключей (generateContent через прокси)[/bold]")
     console.print()
 
-    provider = os.environ.get("LLM_PROVIDER", "gemini").strip().lower()
     if provider != "gemini":
         console.print(f"[yellow]LLM_PROVIDER={provider!r} — диагностика всё равно проверит Gemini.[/yellow]")
         console.print()
 
-    ping_results: list[bool] = []
+    ping_results: list[KeyPingResult] = []
     for index, api_key in enumerate(keys, start=1):
-        _probe_models_list(api_key, base_url)
-        ping_results.append(_ping_single_key(index, len(keys), api_key, base_url, _PING_MODEL))
-        console.print()
+        result = _ping_generate_content(index, api_key, base_url=base_url, model=model)
+        _print_key_result(result, api_key)
+        ping_results.append(result)
 
-    ok_ping = any(ping_results)
+    ok_ping = any(result.ok for result in ping_results)
     ok_match = _test_matching_contract(base_url, model) if ok_ping else False
 
     console.print()
+    active = sum(1 for result in ping_results if result.ok)
     if ok_ping and ok_match:
-        active = sum(ping_results)
         console.print(
             f"[bold green]Итог: SUCCESS — {active}/{len(keys)} ключей активны, "
             "JSON-контракт соблюдён.[/bold green]"
         )
         raise SystemExit(0)
     if ok_ping:
-        active = sum(ping_results)
         console.print(
             f"[bold yellow]Итог: PARTIAL — {active}/{len(keys)} ключей активны, "
             "но тест сопоставления не прошёл.[/bold yellow]"

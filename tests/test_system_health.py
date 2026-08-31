@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock, patch
 
-import httpx
 import pytest
 
 from scripts.check_system_health import _check_llm, _run_llm_deep_check
@@ -19,19 +18,19 @@ class TestCheckLlmGeminiKeys:
 
         mock_response = MagicMock()
         mock_response.status_code = 200
-        mock_client = MagicMock()
-        mock_client.__enter__.return_value = mock_client
-        mock_client.get.return_value = mock_response
 
-        with patch("scripts.check_system_health.httpx.Client", return_value=mock_client):
+        with patch(
+            "scripts.check_system_health.probe_gemini_models_list",
+            return_value=mock_response,
+        ) as mock_probe:
             result = _check_llm()
 
         assert result.ok is True
         assert result.name == "Gemini API"
         assert "Найдено ключей: 2" in result.detail
         assert "gemini-3.5-flash-lite" in result.detail
-        mock_client.get.assert_called_once()
-        assert mock_client.get.call_args.kwargs["params"]["key"] == "key-one"
+        mock_probe.assert_called_once()
+        assert mock_probe.call_args.args[0] == "key-one"
 
     def test_ok_with_single_gemini_api_key(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.setenv("LLM_PROVIDER", "gemini")
@@ -40,11 +39,11 @@ class TestCheckLlmGeminiKeys:
 
         mock_response = MagicMock()
         mock_response.status_code = 200
-        mock_client = MagicMock()
-        mock_client.__enter__.return_value = mock_client
-        mock_client.get.return_value = mock_response
 
-        with patch("scripts.check_system_health.httpx.Client", return_value=mock_client):
+        with patch(
+            "scripts.check_system_health.probe_gemini_models_list",
+            return_value=mock_response,
+        ):
             result = _check_llm()
 
         assert result.ok is True
@@ -66,11 +65,11 @@ class TestCheckLlmGeminiKeys:
 
         mock_response = MagicMock()
         mock_response.status_code = 403
-        mock_client = MagicMock()
-        mock_client.__enter__.return_value = mock_client
-        mock_client.get.return_value = mock_response
 
-        with patch("scripts.check_system_health.httpx.Client", return_value=mock_client):
+        with patch(
+            "scripts.check_system_health.probe_gemini_models_list",
+            return_value=mock_response,
+        ):
             result = _check_llm()
 
         assert result.ok is False

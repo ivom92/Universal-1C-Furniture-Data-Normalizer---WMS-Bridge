@@ -84,26 +84,24 @@ class TestKeyPoolTestConnection:
         assert result.total == 0
         assert "не заданы" in result.message.lower()
 
-    @patch("src.matcher.key_rotator.httpx.Client")
-    def test_all_keys_active(self, mock_client_cls) -> None:
-        mock_response = mock_client_cls.return_value.__enter__.return_value.get.return_value
-        mock_response.status_code = 200
+    @patch("src.llm.gemini_client.probe_gemini_models_list")
+    def test_all_keys_active(self, mock_probe) -> None:
+        mock_probe.return_value.status_code = 200
         pool = KeyPool(["key-a", "key-b"])
         result = pool.test_connection(base_url="https://proxy.example.com")
         assert result.ok is True
         assert result.active == 2
         assert result.total == 2
         assert "Все 2 ключей активны" in result.message
+        assert mock_probe.call_count == 2
 
-    @patch("src.matcher.key_rotator.httpx.Client")
-    def test_partial_key_failure(self, mock_client_cls) -> None:
-        client = mock_client_cls.return_value.__enter__.return_value
-
+    @patch("src.llm.gemini_client.probe_gemini_models_list")
+    def test_partial_key_failure(self, mock_probe) -> None:
         class _Response:
             def __init__(self, status_code: int) -> None:
                 self.status_code = status_code
 
-        client.get.side_effect = [_Response(200), _Response(403)]
+        mock_probe.side_effect = [_Response(200), _Response(403)]
         pool = KeyPool(["good-key", "bad-key"])
         result = pool.test_connection()
         assert result.ok is False

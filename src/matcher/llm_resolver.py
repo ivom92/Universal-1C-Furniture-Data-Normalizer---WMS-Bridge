@@ -12,6 +12,12 @@ from typing import Callable, Optional, TypeVar
 
 import httpx
 
+from src.config import get_config
+from src.llm.gemini_client import (
+    build_gemini_client,
+    gemini_models_list_url,
+    resolve_gemini_base_url,
+)
 from src.matcher.key_rotator import KeyPool, parse_gemini_api_keys
 from src.models import (
     ExtractedFeatures,
@@ -55,38 +61,6 @@ _RETRYABLE_MARKERS = (
 T = TypeVar("T")
 
 
-def resolve_gemini_base_url() -> Optional[str]:
-    """Return a custom Gemini HTTP base URL (Cloudflare reverse-proxy), if configured."""
-    raw = (
-        os.environ.get("GEMINI_BASE_URL")
-        or os.environ.get("GOOGLE_GENAI_BASE_URL")
-        or ""
-    ).strip().rstrip("/")
-    return raw or None
-
-
-def gemini_models_list_url(base_url: Optional[str] = None) -> str:
-    """URL for the Gemini ``models`` list probe (direct Google or reverse-proxy)."""
-    root = (base_url or "https://generativelanguage.googleapis.com").rstrip("/")
-    return f"{root}/v1beta/models"
-
-
-def build_gemini_client(
-    api_key: Optional[str],
-    *,
-    timeout: float,
-    base_url: Optional[str] = None,
-):
-    """Construct ``google.genai.Client`` with optional Cloudflare reverse-proxy base URL."""
-    from google import genai
-
-    timeout_ms = max(1, int(timeout * 1000))
-    http_options: dict[str, object] = {"timeout": timeout_ms}
-    if base_url:
-        http_options["base_url"] = base_url
-    return genai.Client(api_key=api_key, http_options=http_options)
-
-
 def sanitize_json_text(text: str) -> str:
     """Strip Markdown fences and extract the first JSON object from LLM output."""
     cleaned = text.strip()
@@ -119,10 +93,10 @@ class LLMResolver:
         timeout: float = _DEFAULT_REQUEST_TIMEOUT,
         max_workers: int = _LLM_MAX_WORKERS,
     ) -> None:
-        self._provider = (provider or os.environ.get("LLM_PROVIDER", "gemini")).strip().lower()
+        self._provider = (provider or get_config().llm_provider).strip().lower()
         self._key_pool = KeyPool.from_env(explicit_key=gemini_api_key)
         self._gemini_api_key = self._key_pool.keys[0] if self._key_pool.is_available else None
-        self._gemini_model = gemini_model or os.environ.get("GEMINI_MODEL", _DEFAULT_GEMINI_MODEL)
+        self._gemini_model = gemini_model or get_config().gemini_model
         self._gemini_base_url = resolve_gemini_base_url()
         self._ollama_base_url = (
             ollama_base_url or os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")

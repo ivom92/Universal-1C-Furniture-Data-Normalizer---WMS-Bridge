@@ -201,6 +201,8 @@ def test_config_module_importable(monkeypatch: pytest.MonkeyPatch) -> None:
     cfg = get_config()
     assert isinstance(cfg, AppConfig)
     assert cfg.warehouse_pin == "test_pin"
+    assert hasattr(cfg, "gemini_api_keys")
+    assert hasattr(cfg, "gemini_base_url")
 
 
 def test_app_ui_imports_auth() -> None:

@@ -544,7 +544,7 @@ class TestFlashLiteDefaultsAndRetry:
     def test_default_gemini_model_and_timeout(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.delenv("GEMINI_MODEL", raising=False)
         resolver = LLMResolver(provider="gemini", gemini_api_key="test-key")
-        assert resolver.gemini_model == "gemini-2.5-flash-lite"
+        assert resolver.gemini_model == "gemini-3.5-flash-lite"
         assert resolver.timeout == 25.0
 
     def test_retryable_error_markers(self) -> None:
@@ -717,8 +717,10 @@ class TestGeminiProxyBaseUrl:
         kwargs = mock_client.call_args.kwargs
         assert kwargs["api_key"] == "test-key"
         http_options = kwargs["http_options"]
-        assert http_options["base_url"] == "https://gemini-proxy.example.com"
-        assert http_options["timeout"] == 25000
+        assert http_options.headers["x-goog-api-key"] == "test-key"
+        assert "Authorization" not in (http_options.headers or {})
+        assert http_options.base_url == "https://gemini-proxy.example.com"
+        assert http_options.timeout == 25000
 
     def test_google_genai_base_url_alias(self, monkeypatch: pytest.MonkeyPatch) -> None:
         monkeypatch.delenv("GEMINI_BASE_URL", raising=False)

@@ -2,13 +2,10 @@
 
 from __future__ import annotations
 
-import os
 import threading
 import time
 from dataclasses import dataclass
 from typing import Optional
-
-import httpx
 
 from src.utils.logger import get_logger
 
@@ -38,9 +35,14 @@ def parse_gemini_api_keys(
     if explicit_key and explicit_key.strip():
         return [part.strip() for part in explicit_key.split(",") if part.strip()]
 
-    raw = (keys_env if keys_env is not None else os.getenv("GEMINI_API_KEYS", "")).strip()
-    if not raw:
-        raw = (single_key_env if single_key_env is not None else os.getenv("GEMINI_API_KEY", "")).strip()
+    if keys_env is not None:
+        raw = keys_env.strip()
+    elif single_key_env is not None:
+        raw = single_key_env.strip()
+    else:
+        from src.config import get_config
+
+        return get_config().gemini_api_keys
 
     if not raw:
         return []
@@ -134,14 +136,16 @@ class KeyPool:
                 message="GEMINI_API_KEYS / GEMINI_API_KEY не заданы",
             )
 
-        from src.matcher.llm_resolver import gemini_models_list_url
+        from src.llm.gemini_client import probe_gemini_models_list
 
-        url = gemini_models_list_url(base_url)
         active = 0
         for key in self._keys:
             try:
-                with httpx.Client(timeout=timeout) as client:
-                    response = client.get(url, params={"key": key})
+                response = probe_gemini_models_list(
+                    key,
+                    base_url=base_url,
+                    timeout=timeout,
+                )
                 if response.status_code < 400:
                     active += 1
             except Exception:

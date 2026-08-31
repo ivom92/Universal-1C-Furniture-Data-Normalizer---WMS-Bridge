@@ -19,11 +19,11 @@ try:
 except ImportError:
     pass
 
-import httpx
 from rich.table import Table
 
-from src.matcher.key_rotator import parse_gemini_api_keys
-from src.matcher.llm_resolver import LLMResolver, gemini_models_list_url
+from src.config import get_config
+from src.llm.gemini_client import probe_gemini_models_list
+from src.matcher.llm_resolver import LLMResolver
 from src.utils.logger import console, get_logger
 
 CATALOG_PATH = PROJECT_ROOT / "data" / "catalog_v8.xlsx"
@@ -144,7 +144,7 @@ def _check_llm() -> CheckResult:
             )
         return CheckResult("LLM (Ollama)", True, f"{resolver.ollama_model} на {resolver.ollama_base_url}")
 
-    keys = parse_gemini_api_keys()
+    keys = get_config().gemini_api_keys
     if not keys:
         return CheckResult(
             "Gemini API",
@@ -154,10 +154,8 @@ def _check_llm() -> CheckResult:
 
     model = resolver.gemini_model
     proxy_url = resolver.gemini_base_url
-    url = gemini_models_list_url(proxy_url)
     try:
-        with httpx.Client(timeout=8.0) as client:
-            response = client.get(url, params={"key": keys[0]})
+        response = probe_gemini_models_list(keys[0], base_url=proxy_url, timeout=8.0)
         if response.status_code >= 400:
             return CheckResult(
                 "Gemini API",
