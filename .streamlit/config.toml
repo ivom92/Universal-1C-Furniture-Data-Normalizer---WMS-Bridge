@@ -3,7 +3,8 @@ fileWatcherType = "none"
 headless = true
 port = 8501
 enableCORS = false
-enableXsrfProtection = false
+enableXsrfProtection = true
+maxUploadSize = 50
 
 [browser]
 gatherUsageStats = false
@@ -14,7 +15,7 @@ showErrorDetails = false
 
 [theme]
 base = "dark"
-primaryColor = "#2E7D32"
+primaryColor = "#2e7d32"
 backgroundColor = "#0E1117"
 secondaryBackgroundColor = "#1E232B"
 textColor = "#FAFAFA"

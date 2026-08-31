@@ -300,3 +300,101 @@ def test_build_dist_includes_lifecycle_scripts() -> None:
     )
     assert "3_ОСТАНОВИТЬ.bat" in build_script
     assert "Остановить_WMS.vbs" in build_script
+
+
+# ---------------------------------------------------------------------------
+# Sprint 8.25: Session isolation, secret masking, cache_resource
+# ---------------------------------------------------------------------------
+
+class TestMaskSecret:
+    """Unit tests for src.utils.secrets.mask_secret."""
+
+    def test_masks_long_secret(self) -> None:
+        from src.utils.secrets import mask_secret
+
+        result = mask_secret("AIzaSyABCDEFghijklmn")
+        assert result == "AIzaSy…***"
+
+    def test_masks_telegram_token(self) -> None:
+        from src.utils.secrets import mask_secret
+
+        token = "123456789:ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef"
+        result = mask_secret(token, visible_chars=9)
+        assert result.startswith("123456789")
+        assert result.endswith("***")
+        assert "…" in result
+
+    def test_empty_returns_dash(self) -> None:
+        from src.utils.secrets import mask_secret
+
+        assert mask_secret("") == "—"
+        assert mask_secret("   ") == "—"
+
+    def test_short_secret_returns_stars(self) -> None:
+        from src.utils.secrets import mask_secret
+
+        assert mask_secret("abc") == "***"
+        assert mask_secret("short") == "***"
+
+    def test_exactly_visible_chars_returns_stars(self) -> None:
+        from src.utils.secrets import mask_secret
+
+        assert mask_secret("123456", visible_chars=6) == "***"
+
+    def test_custom_visible_chars(self) -> None:
+        from src.utils.secrets import mask_secret
+
+        result = mask_secret("ABCDEFGHIJ", visible_chars=3)
+        assert result == "ABC…***"
+
+    def test_does_not_expose_full_key(self) -> None:
+        from src.utils.secrets import mask_secret
+
+        full_key = "AIzaSyVERYLONGSECRETKEY1234567890XYZ"
+        result = mask_secret(full_key)
+        assert full_key not in result
+        assert len(result) < len(full_key)
+
+
+class TestSessionIsolation:
+    """Contract tests for Sprint 8.25 session isolation changes."""
+
+    def test_app_ui_imports_uuid(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "import uuid" in app_src
+
+    def test_app_ui_assigns_session_uuid(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "session_uuid" in app_src
+        assert "uuid.uuid4()" in app_src
+
+    def test_app_ui_skip_restore_set_for_fresh_session(self) -> None:
+        """Fresh sessions must explicitly set _skip_restore to True."""
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert '"_skip_restore"' in app_src
+
+    def test_ensure_restored_session_guards_fresh_sessions(self) -> None:
+        """_ensure_restored_session must check _session_initialized."""
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "_session_initialized" in app_src
+
+    def test_app_ui_has_clear_session_button(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "Очистить сессию" in app_src or "Сбросить" in app_src
+
+    def test_app_ui_imports_mask_secret(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "mask_secret" in app_src
+        assert "from src.utils.secrets import mask_secret" in app_src
+
+    def test_app_ui_cache_resource_for_pipeline(self) -> None:
+        app_src = (PROJECT_ROOT / "app_ui.py").read_text(encoding="utf-8")
+        assert "@st.cache_resource" in app_src
+        assert "load_pipeline" in app_src
+
+    def test_secrets_module_exists(self) -> None:
+        secrets_path = PROJECT_ROOT / "src" / "utils" / "secrets.py"
+        assert secrets_path.is_file(), "src/utils/secrets.py must exist"
+        src = secrets_path.read_text(encoding="utf-8")
+        assert "mask_secret" in src
+        assert "visible_chars" in src

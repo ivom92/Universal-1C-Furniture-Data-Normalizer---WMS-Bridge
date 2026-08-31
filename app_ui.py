@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import signal
+import uuid
 import warnings
 
 os.environ.setdefault("PYTHONIOENCODING", "utf-8")
@@ -45,6 +46,7 @@ from src.matcher.vector_store import CatalogVectorStore
 from src.models import MatchDecision
 from src.parsers.v8_loader import load_catalog_v8
 from src.pipeline import log_order_profiler, process_order
+from src.utils.auth import BruteForceProtector, is_auth_required, verify_pin
 from src.utils.history_manager import (
     HistoryManager,
     OrderRunMeta,
@@ -55,6 +57,7 @@ from src.utils.history_manager import (
 )
 from src.utils.logger import default_log_path, get_logger
 from src.utils.reporter import count_without_barcode, get_status_badge
+from src.utils.secrets import mask_secret
 from src.utils.scan_station import (
     format_station_order_label,
     partition_scan_attention,
@@ -98,6 +101,50 @@ def _shutdown_server() -> None:
         os.kill(os.getpid(), signal.SIGTERM)
     except (OSError, AttributeError):
         os._exit(0)
+
+
+def _render_pin_screen() -> None:
+    """Render the PIN authentication gate (blocks the full app until correct PIN entered)."""
+    st.title("🔐 Доступ к WMS Bridge (Склад Челябинск)")
+    st.markdown(
+        "Введите PIN-код склада для доступа к системе управления складом."
+    )
+    st.divider()
+
+    protector: BruteForceProtector = st.session_state["_auth_protector"]
+
+    if protector.is_locked_out():
+        remaining = protector.seconds_remaining()
+        st.error(
+            f"🔒 Превышено количество попыток. "
+            f"Доступ заблокирован. Повторите через **{remaining}** сек."
+        )
+        time.sleep(1)
+        st.rerun()
+        return
+
+    if protector.failed_attempts > 0:
+        attempts_left = protector.max_attempts - protector.failed_attempts
+        st.warning(f"❌ Неверный PIN-код. Осталось попыток: {attempts_left}")
+
+    with st.form("pin_login_form", clear_on_submit=True):
+        pin_input = st.text_input(
+            "PIN-код",
+            type="password",
+            placeholder="Введите PIN-код склада",
+            label_visibility="collapsed",
+        )
+        submitted = st.form_submit_button("🔓 Войти", type="primary", use_container_width=True)
+
+    if submitted:
+        target_pin = os.environ.get("WAREHOUSE_PIN", "")
+        if verify_pin(pin_input, target_pin):
+            protector.record_success()
+            st.session_state["authenticated"] = True
+            st.rerun()
+        else:
+            protector.record_failure()
+            st.rerun()
 
 
 def _render_support_footer(catalog_size: int = 0) -> None:
@@ -470,7 +517,16 @@ def _restore_from_meta(meta: OrderRunMeta) -> dict[str, Any] | None:
 
 
 def _ensure_restored_session() -> None:
+    """Restore last-run WMS data — only for sessions that have been active before.
+
+    Fresh sessions (new browser tabs, incognito windows, different users) are
+    detected by the absence of ``_session_initialized`` and are never
+    contaminated with another user's data from the shared disk history.
+    """
     if st.session_state.get("_skip_restore"):
+        return
+    # Do NOT auto-restore for brand-new sessions — prevents cross-user state leak.
+    if not st.session_state.get("_session_initialized"):
         return
     if st.session_state.get("current_result"):
         return
@@ -615,7 +671,7 @@ def _render_header(catalog_size: int) -> None:
             st.caption("🔴 Каталог 1С v8 не загружен")
     with right:
         st.write("")
-        if st.button("🔄 Новый заказ / Очистить экран", width="stretch"):
+        if st.button("🧹 Очистить сессию", width="stretch", key="header_clear"):
             _clear_active_view()
             st.rerun()
 
@@ -873,6 +929,30 @@ def main() -> None:
         page_icon="📦",
         layout="wide",
     )
+
+    # ------------------------------------------------------------------
+    # Auth gate — must run before any sidebar or content rendering.
+    # ------------------------------------------------------------------
+    if "authenticated" not in st.session_state:
+        st.session_state["authenticated"] = False
+    if "_auth_protector" not in st.session_state:
+        st.session_state["_auth_protector"] = BruteForceProtector()
+
+    if is_auth_required() and not st.session_state.get("authenticated"):
+        _render_pin_screen()
+        st.stop()
+        return
+
+    # ------------------------------------------------------------------
+    # Assign a unique UUID on first access — distinguishes each browser session.
+    # Fresh sessions (new tab / incognito / different user) start with a clean
+    # slate; _session_initialized is only set after the first rerun cycle so that
+    # _ensure_restored_session() skips the shared disk history for brand-new sessions.
+    # ------------------------------------------------------------------
+    if "session_uuid" not in st.session_state:
+        st.session_state["session_uuid"] = str(uuid.uuid4())
+        st.session_state["_skip_restore"] = True  # no auto-restore for fresh sessions
+
     if "current_result" not in st.session_state:
         st.session_state["current_result"] = None
     if "batch_results" not in st.session_state:
@@ -881,6 +961,8 @@ def main() -> None:
         st.session_state["operator_overrides"] = {}
     if "operator_overrides_by_order" not in st.session_state:
         st.session_state["operator_overrides_by_order"] = {}
+    # Mark session as initialized so _ensure_restored_session works on reruns.
+    st.session_state["_session_initialized"] = True
 
     with st.sidebar:
         st.header("Настройки")
@@ -896,9 +978,19 @@ def main() -> None:
         st.markdown(llm_status_line)
         st.caption(llm_status_caption)
 
-        if provider == "gemini" and st.button("🔍 Проверить ключи", key="sidebar_ping_llm"):
-            ping = KeyPool.from_env().test_connection(base_url=resolve_gemini_base_url())
-            st.toast(ping.message, icon="✅" if ping.ok else "⚠️")
+        if provider == "gemini":
+            # Show masked key preview so operator can verify which key is active
+            # without exposing the full credential in the UI.
+            raw_key = os.environ.get("GEMINI_API_KEYS", "") or os.environ.get("GEMINI_API_KEY", "")
+            first_key = (raw_key.split(",")[0]).strip() if raw_key else ""
+            st.caption(f"Ключ (preview): `{mask_secret(first_key)}`")
+            if st.button("🔍 Проверить ключи", key="sidebar_ping_llm"):
+                ping = KeyPool.from_env().test_connection(base_url=resolve_gemini_base_url())
+                st.toast(ping.message, icon="✅" if ping.ok else "⚠️")
+        elif provider == "ollama":
+            raw_token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+            if raw_token:
+                st.caption(f"Telegram token: `{mask_secret(raw_token)}`")
 
         try:
             _, catalog_size = load_pipeline(provider)
@@ -916,9 +1008,22 @@ def main() -> None:
         st.markdown(
             "**Контракт WMS:** `[№, Наименование, Штрихкод, Количество, Заказчик]`"
         )
-        if st.button("🔄 Новый заказ / Очистить экран", key="sidebar_clear"):
-            _clear_active_view()
-            st.rerun()
+        st.caption(f"Сессия: `{st.session_state.get('session_uuid', '—')[:8]}…`")
+        col_clear1, col_clear2 = st.columns(2)
+        with col_clear1:
+            if st.button("🔄 Новый заказ", key="sidebar_clear", use_container_width=True):
+                _clear_active_view()
+                st.rerun()
+        with col_clear2:
+            if st.button("🧹 Сбросить", key="sidebar_session_reset", use_container_width=True):
+                _clear_active_view()
+                st.rerun()
+
+        if is_auth_required():
+            st.divider()
+            if st.button("🔒 Выйти", key="sidebar_logout", use_container_width=True):
+                st.session_state["authenticated"] = False
+                st.rerun()
 
         st.divider()
         st.caption("Завершение работы освобождает папку проекта от блокировки Windows.")
